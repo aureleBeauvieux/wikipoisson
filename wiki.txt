@@ -1,0 +1,80 @@
+CREATE TABLE users (
+   user_id INT,
+   pseudo VARCHAR(50),
+   email VARCHAR(255),
+   mdp VARCHAR(255),
+   role VARCHAR(50),
+   PRIMARY KEY(user_id)
+);
+
+CREATE TABLE historique (
+   id_historique INT,
+   recherches VARCHAR(100),
+   date DATETIME,
+   user_id INT NOT NULL,
+   PRIMARY KEY(id_historique),
+   FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE famille (
+   id_categorie INT,
+   libelle VARCHAR(50),
+   description TEXT,
+   PRIMARY KEY(id_categorie)
+);
+
+CREATE TABLE temperament (
+   id_temperament INT,
+   libelle VARCHAR(50),
+   PRIMARY KEY(id_temperament)
+);
+
+CREATE TABLE habitat (
+   id_habitat INT,
+   libelle VARCHAR(50),
+   PRIMARY KEY(id_habitat)
+);
+
+CREATE TABLE espece (
+   id_espece BIGINT,
+   nom_commun VARCHAR(50),
+   nom_scientifique VARCHAR(50),
+   description TEXT,
+   taille_max DECIMAL(15,2),
+   alimentation VARCHAR(50),
+   temperature DECIMAL(15,2),
+   dificulte VARCHAR(50),
+   cree_le DATETIME,
+   modifie_le DATETIME,
+   id_temperament INT NOT NULL,
+   id_categorie INT NOT NULL,
+   id_habitat INT NOT NULL,
+   id_contribution_valide INT,
+   FOREIGN KEY(id_temperament) REFERENCES temperament(id_temperament),
+   FOREIGN KEY(id_categorie) REFERENCES famille(id_categorie),
+   FOREIGN KEY(id_habitat) REFERENCES habitat(id_habitat),
+);
+
+CREATE TABLE commentaires (
+   id_commentaire INT,
+   note TINYINT,
+   commentaire TEXT,
+   date DATETIME,
+   validation BOOLEAN,
+   user_id INT NOT NULL,
+   id_espece BIGINT NOT NULL,
+   PRIMARY KEY(id_commentaire),
+   FOREIGN KEY(user_id) REFERENCES users(user_id),
+   FOREIGN KEY(id_espece) REFERENCES espece(id_espece)
+);
+
+CREATE TABLE contribution (
+   id_contribution INT,
+   date_creation DATETIME,
+   validation BOOLEAN,
+   user_id INT NOT NULL,
+   id_espece BIGINT NOT NULL,
+   PRIMARY KEY(id_contribution),
+   FOREIGN KEY(user_id) REFERENCES users(user_id),
+   FOREIGN KEY(id_espece) REFERENCES espece(id_espece)
+);

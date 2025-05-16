@@ -12,9 +12,6 @@ const initUserRoutes = (app) => {
     router.post("/signIn", UserController.signIn);
     router.get("/read", UserController.read);
     router.get("/readOneUser", UserController.readOneUser);
-    router.post("/sign-up-workshop", UserController.signUpWorkshop);
-    router.post("/isRegistered", UserController.isRegistered);
-    router.get("/registeredWorkshop", UserController.registeredWorkshop);
     router.put("/updateUser", jwt, UserController.updateUser);
 
     // Utilisation du routeur dans l'application avec le préfixe "/users"

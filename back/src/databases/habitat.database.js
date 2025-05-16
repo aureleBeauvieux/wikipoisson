@@ -2,17 +2,17 @@
 import query from "./init.database.js";
 
 // Fonction pour créer un nouveau message
-const createMessage = async (sender, receiver, content) => {
+const createHabitat = async(libelle, description) => {
     const sql = `
-        INSERT INTO messages (sender, receiver, content)
-        VALUES (?, ?, ?)
+        INSERT INTO habitat (libelle, description)
+        VALUES (?, ?)
     `;
 
     let error = null;
     let result = null;
 
     try {
-        result = await query(sql, [sender, receiver, content]);
+        result = await query(sql, [libelle, description]);
     } catch (e) {
         error = e.message;
     } finally {
@@ -21,12 +21,11 @@ const createMessage = async (sender, receiver, content) => {
 };
 
 // Fonction pour récupérer les 5 premiers messages de la base de données
-const readMessages = async () => {
+const readHabitats = async() => {
     const sql = `
-        SELECT message_id, sender, receiver, CONCAT(LEFT(content, 100), "...") AS content, date
-        FROM messages
-        ORDER BY date DESC
-        LIMIT 10
+        SELECT id_habitat, description, libelle
+        FROM habitat
+        ORDER BY libelle DESC
     `;
 
     let error = null;
@@ -42,18 +41,18 @@ const readMessages = async () => {
 };
 
 // Fonction pour récupérer un seul message en fonction de son ID
-const readOneMessage = async (messageId) => {
+const readOneHabitat = async(id_habitat) => {
     const sql = `
-        SELECT sender, receiver, content
-        FROM messages
-        WHERE message_id = ?
+        SELECT description, libelle
+        FROM habitat
+        WHERE id_habitat = ?
     `;
 
     let error = null;
     let result = null;
 
     try {
-        result = await query(sql, [messageId]);
+        result = await query(sql, [id_habitat]);
     } catch (e) {
         error = e.message;
     } finally {
@@ -62,18 +61,18 @@ const readOneMessage = async (messageId) => {
 };
 
 // Fonction pour mettre à jour un message en fonction de son ID
-const updateMessage = async (sender, receiver, content, messageId) => {
+const updateHabitat = async(id_habitat, description, libelle) => {
     const sql = `
-        UPDATE messages
-        SET sender = ?, receiver = ?, content = ?
-        WHERE message_id = ?
+        UPDATE habitat
+        SET description = ?, libelle = ?
+        WHERE id_habitat = ?
     `;
 
     let error = null;
     let result = null;
 
     try {
-        result = await query(sql, [sender, receiver, content, messageId]);
+        result = await query(sql, [id_habitat, description, libelle]);
     } catch (e) {
         error = e.message;
     } finally {
@@ -82,17 +81,17 @@ const updateMessage = async (sender, receiver, content, messageId) => {
 };
 
 // Fonction pour supprimer un message en fonction de son ID
-const deleteOneMessage = async (messageId) => {
+const deleteOneHabitat = async(id_habitat) => {
     const sql = `
-        DELETE FROM messages
-        WHERE message_id = ?
+        DELETE FROM habitat
+        WHERE id_habitat = ?
     `;
 
     let error = null;
     let result = null;
 
     try {
-        result = await query(sql, [messageId]);
+        result = await query(sql, [id_habitat]);
     } catch (e) {
         error = e.message;
     } finally {
@@ -102,10 +101,10 @@ const deleteOneMessage = async (messageId) => {
 
 
 // Exportation des fonctions dans message.controller
-export const MessageDB = {
-    createMessage,
-    readMessages,
-    readOneMessage,
-    updateMessage,
-    deleteOneMessage
+export const HabitatDB = {
+    createHabitat,
+    readHabitats,
+    readOneHabitat,
+    updateHabitat,
+    deleteOneHabitat,
 };
