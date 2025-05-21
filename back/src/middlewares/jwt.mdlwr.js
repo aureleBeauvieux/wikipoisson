@@ -1,10 +1,14 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Options pour la création du token JWT (expiration après 8 heures)
 const jwtOptions = { expiresIn: `28800000` }; // 8h
 
 // Clé secrète pour la signature du token, avec une valeur par défaut si non définie dans les variables d'environnement
-const secret = process.env.JWT_SECRET || "T0P_S3CRet";
+const secret = process.env.JWT_SECRET;
 
 // Middleware pour la vérification du token JWT dans les requêtes
 const jwtMdlwr = (req, res, next) => {
@@ -32,8 +36,7 @@ const jwtVerify = (token) => {
         // Récupération de l'identifiant de l'utilisateur depuis le token décrypté
         const userId = decoded.data;
         return userId;
-    }
-    catch (err) {
+    } catch (err) {
         // En cas d'erreur, affichage dans la console et retour de la valeur null
         console.error(`jwt.mdlwr.js - jwtVerify - erreur => `, err.message);
         return null;

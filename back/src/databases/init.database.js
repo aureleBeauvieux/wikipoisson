@@ -1,12 +1,15 @@
 import mysql from "mysql";
+import dotenv from "dotenv";
 
+// Load environment variables from .env file
+dotenv.config();
 // Création d'un gestionnaire (ou pool) de connexions à la base de données MySQL
 const pool = mysql.createPool({
     connectionLimit: 10000,
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "wikipoisson",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 // Fonction pour exécuter une requête SQL
