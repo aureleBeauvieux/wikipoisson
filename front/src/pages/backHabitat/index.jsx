@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backUser.css";
+import "./backHabitat.css";
 
-const BackUser = () => {
-  const [users, setUsers] = useState(null);
-  console.log(users);
+const BackHabitat = () => {
+  const [habitats, setHabitats] = useState(null);
+  console.log(habitats);
   useEffect(() => {
     let data;
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:3009/users/read",
+      url: "http://localhost:3009/habitat/read",
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ const BackUser = () => {
     axios
       .request(config)
       .then((response) => {
-        setUsers(response.data.users);
+        setHabitats(response.data.habitats);
       })
       .catch((error) => {
         console.log(error);
@@ -36,16 +36,16 @@ const BackUser = () => {
           <tr>
             <th
               style={{ width: "5%" }}
-              aria-label="Identifiant de l'utilisateur"
+              aria-label="Identifiant de la habitat"
             >
               Id
             </th>
             
-            <th style={{ width: "30%" }} aria-label="Pseudo de l'utilisateur">
-              Pseudo
+            <th style={{ width: "30%" }} aria-label="Libellé de l'habitat">
+              Libellé
             </th>
-            <th style={{ width: "30%" }} aria-label="Email de l'utilisateur">
-              Email
+            <th style={{ width: "30%" }} aria-label="Description de l'habitat">
+              Description
             </th>
             <th style={{ width: "30%" }} aria-label="Actions">
               Action
@@ -53,17 +53,17 @@ const BackUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user.user_id}>
-                <td>{user.user_id}</td>
-                <td>{user.peudo}</td>
-                <td>{user.email}</td>
+          {habitats &&
+            habitats.map((habitat) => (
+              <tr key={habitat.habitat_id}>
+                <td>{habitat.habitat_id}</td>
+                <td>{habitat.libelle}</td>
+                <td>{habitat.description}</td>
                 <td>
                   <Link
-                    to={`/userProfile/${user.user_id}`}
+                    to={`/habitatProfile/${habitat.habitat_id}`}
                     className="btn btn-primary"
-                    aria-label="Editer les utilisateurs"
+                    aria-label="Editer les habitats"
                   >
                     Editer
                   </Link>
@@ -71,10 +71,10 @@ const BackUser = () => {
               </tr>
             ))}
 
-          {users && !users.length && (
+          {habitats && !habitats.length && (
             <tr>
               <td>
-                <p>Pas de membres à afficher</p>
+                <p>Pas d'habitat à afficher</p>
               </td>
             </tr>
           )}
@@ -84,4 +84,4 @@ const BackUser = () => {
   );
 };
 
-export default BackUser;
+export default BackHabitat;

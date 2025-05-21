@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backUser.css";
+import "./backTemperament.css";
 
-const BackUser = () => {
-  const [users, setUsers] = useState(null);
-  console.log(users);
+const BackTemperament = () => {
+  const [temperaments, setTemperaments] = useState(null);
+  console.log(temperaments);
   useEffect(() => {
     let data;
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:3009/users/read",
+      url: "http://localhost:3009/temperament/read",
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ const BackUser = () => {
     axios
       .request(config)
       .then((response) => {
-        setUsers(response.data.users);
+        setTemperaments(response.data.temperaments);
       })
       .catch((error) => {
         console.log(error);
@@ -36,16 +36,16 @@ const BackUser = () => {
           <tr>
             <th
               style={{ width: "5%" }}
-              aria-label="Identifiant de l'utilisateur"
+              aria-label="Identifiant du temperament"
             >
               Id
             </th>
             
-            <th style={{ width: "30%" }} aria-label="Pseudo de l'utilisateur">
-              Pseudo
+            <th style={{ width: "30%" }} aria-label="Libellé du temperament">
+              Libellé
             </th>
-            <th style={{ width: "30%" }} aria-label="Email de l'utilisateur">
-              Email
+            <th style={{ width: "30%" }} aria-label="Description du temperament">
+              Description
             </th>
             <th style={{ width: "30%" }} aria-label="Actions">
               Action
@@ -53,17 +53,17 @@ const BackUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user.user_id}>
-                <td>{user.user_id}</td>
-                <td>{user.peudo}</td>
-                <td>{user.email}</td>
+          {temperaments &&
+            temperaments.map((temperament) => (
+              <tr key={temperament.temperament_id}>
+                <td>{temperament.temperament_id}</td>
+                <td>{temperament.libelle}</td>
+                <td>{temperament.description}</td>
                 <td>
                   <Link
-                    to={`/userProfile/${user.user_id}`}
+                    to={`/temperamentProfile/${temperament.temperament_id}`}
                     className="btn btn-primary"
-                    aria-label="Editer les utilisateurs"
+                    aria-label="Editer les temperaments"
                   >
                     Editer
                   </Link>
@@ -71,10 +71,10 @@ const BackUser = () => {
               </tr>
             ))}
 
-          {users && !users.length && (
+          {temperaments && !temperaments.length && (
             <tr>
               <td>
-                <p>Pas de membres à afficher</p>
+                <p>Pas de temperament à afficher</p>
               </td>
             </tr>
           )}
@@ -84,4 +84,4 @@ const BackUser = () => {
   );
 };
 
-export default BackUser;
+export default BackTemperament;

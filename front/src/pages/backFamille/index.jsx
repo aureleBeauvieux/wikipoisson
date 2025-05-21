@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backUser.css";
+import "./backFamille.css";
 
-const BackUser = () => {
-  const [users, setUsers] = useState(null);
-  console.log(users);
+const BackFamille = () => {
+  const [familles, setFamilles] = useState(null);
+  console.log(familles);
   useEffect(() => {
     let data;
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:3009/users/read",
+      url: "http://localhost:3009/famille/read",
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ const BackUser = () => {
     axios
       .request(config)
       .then((response) => {
-        setUsers(response.data.users);
+        setFamilles(response.data.familles);
       })
       .catch((error) => {
         console.log(error);
@@ -36,16 +36,16 @@ const BackUser = () => {
           <tr>
             <th
               style={{ width: "5%" }}
-              aria-label="Identifiant de l'utilisateur"
+              aria-label="Identifiant de la famille"
             >
               Id
             </th>
             
-            <th style={{ width: "30%" }} aria-label="Pseudo de l'utilisateur">
-              Pseudo
+            <th style={{ width: "30%" }} aria-label="Libellé de la famille">
+              Libellé
             </th>
-            <th style={{ width: "30%" }} aria-label="Email de l'utilisateur">
-              Email
+            <th style={{ width: "30%" }} aria-label="Description de la famille">
+              Description
             </th>
             <th style={{ width: "30%" }} aria-label="Actions">
               Action
@@ -53,17 +53,17 @@ const BackUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user.user_id}>
-                <td>{user.user_id}</td>
-                <td>{user.peudo}</td>
-                <td>{user.email}</td>
+          {familles &&
+            familles.map((famille) => (
+              <tr key={famille.famille_id}>
+                <td>{famille.famille_id}</td>
+                <td>{famille.libelle}</td>
+                <td>{famille.description}</td>
                 <td>
                   <Link
-                    to={`/userProfile/${user.user_id}`}
+                    to={`/familleProfile/${famille.famille_id}`}
                     className="btn btn-primary"
-                    aria-label="Editer les utilisateurs"
+                    aria-label="Editer les familles"
                   >
                     Editer
                   </Link>
@@ -71,10 +71,10 @@ const BackUser = () => {
               </tr>
             ))}
 
-          {users && !users.length && (
+          {familles && !familles.length && (
             <tr>
               <td>
-                <p>Pas de membres à afficher</p>
+                <p>Pas de familles à afficher</p>
               </td>
             </tr>
           )}
@@ -84,4 +84,4 @@ const BackUser = () => {
   );
 };
 
-export default BackUser;
+export default BackFamille;

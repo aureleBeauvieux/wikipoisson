@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backUser.css";
+import "./backEspece.css";
 
-const BackUser = () => {
-  const [users, setUsers] = useState(null);
-  console.log(users);
+const BackEspece = () => {
+  const [especes, setEspeces] = useState(null);
+  console.log(especes);
   useEffect(() => {
     let data;
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:3009/users/read",
+      url: "http://localhost:3009/espece/read",
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ const BackUser = () => {
     axios
       .request(config)
       .then((response) => {
-        setUsers(response.data.users);
+        setEspeces(response.data.especes);
       })
       .catch((error) => {
         console.log(error);
@@ -36,16 +36,19 @@ const BackUser = () => {
           <tr>
             <th
               style={{ width: "5%" }}
-              aria-label="Identifiant de l'utilisateur"
+              aria-label="Identifiant de l'espece"
             >
               Id
             </th>
             
-            <th style={{ width: "30%" }} aria-label="Pseudo de l'utilisateur">
-              Pseudo
+            <th style={{ width: "30%" }} aria-label="nom_commun de l'espece">
+              nom_commun
             </th>
-            <th style={{ width: "30%" }} aria-label="Email de l'utilisateur">
-              Email
+            <th style={{ width: "30%" }} aria-label="cree_le de l'espece">
+              cree_le
+            </th>
+            <th style={{ width: "30%" }} aria-label="modifie_le de l'espece">
+              modifie_le
             </th>
             <th style={{ width: "30%" }} aria-label="Actions">
               Action
@@ -53,17 +56,18 @@ const BackUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((user) => (
-              <tr key={user.user_id}>
-                <td>{user.user_id}</td>
-                <td>{user.peudo}</td>
-                <td>{user.email}</td>
+          {especes &&
+            especes.map((espece) => (
+              <tr key={espece.espece_id}>
+                <td>{espece.espece_id}</td>
+                <td>{espece.nom_commun}</td>
+                <td>{espece.cree_le}</td>
+                <td>{espece.modifie_le}</td>
                 <td>
                   <Link
-                    to={`/userProfile/${user.user_id}`}
+                    to={`/especeProfile/${espece.espece_id}`}
                     className="btn btn-primary"
-                    aria-label="Editer les utilisateurs"
+                    aria-label="Editer les especes"
                   >
                     Editer
                   </Link>
@@ -71,10 +75,10 @@ const BackUser = () => {
               </tr>
             ))}
 
-          {users && !users.length && (
+          {especes && !especes.length && (
             <tr>
               <td>
-                <p>Pas de membres à afficher</p>
+                <p>Pas de espece à afficher</p>
               </td>
             </tr>
           )}
@@ -84,4 +88,4 @@ const BackUser = () => {
   );
 };
 
-export default BackUser;
+export default BackEspece;
