@@ -31,6 +31,8 @@ const BackFamille = () => {
 
   return (
     <div className="main">
+      <h1>Familles</h1>
+      <Link to="/backFamille/create" className="my-4">Créer famille</Link>
       <table className="table">
         <thead>
           <tr>

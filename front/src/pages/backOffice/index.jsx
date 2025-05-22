@@ -8,18 +8,29 @@ const BackOffice = () => {
                 <Link to={"/backUser"} aria-label="Accéder à la gestion des membres">
                     <button className="button back">Gestion des membres</button>
                 </Link>
+                <Link to={"/backEspece"} aria-label="Accéder à la gestion des espèces">
+                        <button className="button back">Gestion des espèces</button>
+                    </Link>
 
-                {/* <Link to={"/backCategory"} aria-label="Accéder à la gestion des catégories">
-                    <button className="button back">Gestion des catégories</button>
-                </Link>
+                <Link to={"/backHabitat"} aria-label="Accéder à la gestion des habitats">
+                        <button className="button back">Gestion des habitats</button>
+                    </Link>
 
-                <Link to={"/backWorkshop"} aria-label="Accéder à la gestion des ateliers">
-                    <button className="button back">Gestion des ateliers</button>
-                </Link>
+                <Link to={"/backFamille"} aria-label="Accéder à la gestion des familles">
+                        <button className="button back">Gestion des familles</button>
+                    </Link>
 
-                <Link to={"/backMessage"} aria-label="Accéder à la gestion des messages">
-                    <button className="button back">Gestion des messages</button>
-                </Link> */}           
+                <Link to={"/backTemperament"} aria-label="Accéder à la gestion des tempéraments">
+                        <button className="button back">Gestion des tempéraments</button>
+                    </Link>
+
+                <Link to={"/backContribution"} aria-label="Accéder à la gestion des contributions">
+                        <button className="button back">Gestion des contributions</button>
+                    </Link>
+
+                <Link to={"/backCommentaire"} aria-label="Accéder à la gestion des commentaires">
+                        <button className="button back">Gestion des commentaires</button>
+                    </Link> 
             </div>
         </div>
     );
