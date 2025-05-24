@@ -2,9 +2,9 @@
 import query from "./init.database.js";
 
 // Fonction pour créer une nouvelle contribution
-const createContribution = async(date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat) => {
+const createContribution = async(date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat) => {
     const sql = `
-        INSERT INTO contribution (date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat)
+        INSERT INTO contribution (date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
@@ -12,7 +12,7 @@ const createContribution = async(date_creation, validation, user_id, id_espece, 
     let result = null;
 
     try {
-        result = await query(sql, [date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat]);
+        result = await query(sql, [date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat]);
     } catch (e) {
         error = e.message;
     } finally {
@@ -23,7 +23,7 @@ const createContribution = async(date_creation, validation, user_id, id_espece, 
 // Fonction pour récupérer toutes les contributions
 const readContributions = async() => {
     const sql = `
-        SELECT id_contribution, date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat
+        SELECT id_contribution, date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat
         FROM contribution
         ORDER BY date_creation DESC
     `;
@@ -43,7 +43,7 @@ const readContributions = async() => {
 // Fonction pour récupérer une seule contribution
 const readOneContribution = async(id_contribution) => {
     const sql = `
-        SELECT date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat
+        SELECT date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat
         FROM contribution
         WHERE id_contribution = ?
     `;
@@ -61,10 +61,10 @@ const readOneContribution = async(id_contribution) => {
 };
 
 // Fonction pour mettre à jour une contribution
-const updateContribution = async(id_contribution, date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat) => {
+const updateContribution = async(id_contribution, date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat) => {
     const sql = `
         UPDATE contribution
-        SET date_creation = ?, validation = ?, user_id = ?, id_espece = ?, nom_commun = ?, nom_scientifique = ?, description = ?, taille_max = ?, alimentation = ?, temperature = ?, dificulte = ?, cree_le = ?, id_temperament = ?, id_categorie = ?, id_habitat = ?
+        SET date_creation = ?, validation = ?, user_id = ?, id_espece = ?, nom_commun = ?, nom_scientifique = ?, description = ?, taille_max = ?, alimentation = ?, temperature = ?, dificulte = ?, cree_le = ?, id_temperament = ?, id_famille = ?, id_habitat = ?
         WHERE id_contribution = ?
     `;
 
@@ -72,7 +72,7 @@ const updateContribution = async(id_contribution, date_creation, validation, use
     let result = null;
 
     try {
-        result = await query(sql, [date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie, id_habitat, , id_contribution]);
+        result = await query(sql, [date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat, , id_contribution]);
     } catch (e) {
         error = e.message;
     } finally {

@@ -13,9 +13,13 @@ const createEspece = async(
     cree_le,
     modifie_le,
     id_temperament,
-    id_categorie,
+    id_famille,
     id_habitat,
-    id_contribution_valide, ) => {
+    id_contribution_valide,
+    image_1,
+    image_2,
+    image_3,
+) => {
 
     const sql = `
         INSERT INTO espece (
@@ -29,10 +33,13 @@ const createEspece = async(
         cree_le,
         modifie_le,
         id_temperament,
-        id_categorie,
+        id_famille,
         id_habitat,
-        id_contribution_valide,)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        id_contribution_valide,
+        image_1,
+        image_2,
+        image_3,)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     let error = null;
@@ -50,9 +57,12 @@ const createEspece = async(
             cree_le,
             modifie_le,
             id_temperament,
-            id_categorie,
+            id_famille,
             id_habitat,
-            id_contribution_valide
+            id_contribution_valide,
+            image_1,
+            image_2,
+            image_3
         ]);
     } catch (e) {
         error = e.message;
@@ -114,14 +124,18 @@ const updateEspece = async(
     cree_le,
     modifie_le,
     id_temperament,
-    id_categorie,
+    id_famille,
     id_habitat,
-    id_contribution_valide) => {
+    id_contribution_valide,
+    image_1,
+    image_2,
+    image_3
+) => {
 
     const sql = `
         UPDATE espece
         SET nom_commun = ?, nom_scientifique = ?, description = ?, taille_max = ?, alimentation = ?, temperature = ?, dificulte = ?, 
-        cree_le = ?, modifie_le = ?, id_temperament = ?, id_categorie =?, id_habitat = ?, id_contribution_valide = ?
+        cree_le = ?, modifie_le = ?, id_temperament = ?, id_famille =?, id_habitat = ?, id_contribution_valide = ?, image_1 = ?, image_2 = ?, image_3 = ?
         WHERE id_espece = ?
     `;
 
@@ -141,9 +155,12 @@ const updateEspece = async(
             cree_le,
             modifie_le,
             id_temperament,
-            id_categorie,
+            id_famille,
             id_habitat,
-            id_contribution_valide //peut coser problèmes 
+            id_contribution_valide,
+            image_1,
+            image_2,
+            image_3 //peut coser problèmes 
         ]);
 
     } catch (e) {

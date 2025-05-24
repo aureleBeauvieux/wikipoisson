@@ -1,33 +1,62 @@
 import { ContributionDB } from "../databases/contribution.database.js";
+import multer from 'multer';
+import path from 'path';
+
+// Configuration de multer pour le stockage des images
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads/especes/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage }).fields([
+    { name: 'image_1', maxCount: 1 },
+    { name: 'image_2', maxCount: 1 },
+    { name: 'image_3', maxCount: 1 }
+]);
 
 // Fonction pour créer une contribution
 const createContribution = async(req, res) => {
-    const {
-        date_creation,
-        validation,
-        user_id,
-        id_espece,
-        nom_commun,
-        nom_scientifique,
-        description,
-        taille_max,
-        alimentation,
-        temperature,
-        dificulte,
-        cree_le,
-        id_temperament,
-        id_categorie,
-        id_habitat,
+    upload(req, res, async(err) => {
+        if (err) {
+            return res.status(500).json({ message: "Erreur lors de l'upload des images" });
+        }
 
-    } = req.body;
+        const {
+            date_creation,
+            validation,
+            user_id,
+            id_espece,
+            nom_commun,
+            nom_scientifique,
+            description,
+            taille_max,
+            alimentation,
+            temperature,
+            dificulte,
+            cree_le,
+            id_temperament,
+            id_famille,
+            id_habitat,
+        } = req.body;
 
-    const response = await ContributionDB.createContribution(date_creation, validation,
-        user_id, id_espece, nom_commun, nom_scientifique, description, taille_max,
-        alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie,
-        id_habitat);
-    const result = response.result;
+        const image_1 = req.files['image_1'] ? req.files['image_1'][0].path : null;
+        const image_2 = req.files['image_2'] ? req.files['image_2'][0].path : null;
+        const image_3 = req.files['image_3'] ? req.files['image_3'][0].path : null;
 
-    return res.status(201).json({ message: "OK", contributions: result });
+        const response = await ContributionDB.createContribution(
+            date_creation, validation, user_id, id_espece, nom_commun,
+            nom_scientifique, description, taille_max, alimentation,
+            temperature, dificulte, cree_le, id_temperament, id_famille,
+            id_habitat, image_1, image_2, image_3
+        );
+        const result = response.result;
+
+        return res.status(201).json({ message: "OK", contributions: result });
+    });
 };
 
 // Fonction pour récupérer toutes les contributions
@@ -60,8 +89,11 @@ const readOneContribution = async(req, res) => {
         dificulte: result[0].dificulte,
         cree_le: result[0].cree_le,
         id_temperament: result[0].id_temperament,
-        id_categorie: result[0].id_categorie,
+        id_famille: result[0].id_famille,
         id_habitat: result[0].id_habitat,
+        image_1: result[0].image_1,
+        image_2: result[0].image_2,
+        image_3: result[0].image_3
     };
 
     return res.status(200).json({ message: "Requête OK", contribution });
@@ -69,35 +101,47 @@ const readOneContribution = async(req, res) => {
 
 // Fonction pour modifier une contribution
 const updateContribution = async(req, res) => {
-    const {
-        date_creation,
-        validation,
-        user_id,
-        id_espece,
-        nom_commun,
-        nom_scientifique,
-        description,
-        taille_max,
-        alimentation,
-        temperature,
-        dificulte,
-        cree_le,
-        id_temperament,
-        id_categorie,
-        id_habitat,
-        id_contribution
-    } = req.body;
+    upload(req, res, async(err) => {
+        if (err) {
+            return res.status(500).json({ message: "Erreur lors de l'upload des images" });
+        }
 
-    const response = await ContributionDB.updateContribution(date_creation, validation,
-        user_id, id_espece, nom_commun, nom_scientifique, description, taille_max,
-        alimentation, temperature, dificulte, cree_le, id_temperament, id_categorie,
-        id_habitat, id_contribution);
+        const {
+            date_creation,
+            validation,
+            user_id,
+            id_espece,
+            nom_commun,
+            nom_scientifique,
+            description,
+            taille_max,
+            alimentation,
+            temperature,
+            dificulte,
+            cree_le,
+            id_temperament,
+            id_famille,
+            id_habitat,
+            id_contribution
+        } = req.body;
 
-    if (response.error) {
-        return res.status(500).json({ message: response.error });
-    }
+        const image_1 = req.files['image_1'] ? req.files['image_1'][0].path : null;
+        const image_2 = req.files['image_2'] ? req.files['image_2'][0].path : null;
+        const image_3 = req.files['image_3'] ? req.files['image_3'][0].path : null;
 
-    return res.status(200).json({ message: `La contribution numéro ${id_contribution} a été modifiée` });
+        const response = await ContributionDB.updateContribution(
+            date_creation, validation, user_id, id_espece, nom_commun,
+            nom_scientifique, description, taille_max, alimentation,
+            temperature, dificulte, cree_le, id_temperament, id_famille,
+            id_habitat, id_contribution, image_1, image_2, image_3
+        );
+
+        if (response.error) {
+            return res.status(500).json({ message: response.error });
+        }
+
+        return res.status(200).json({ message: `La contribution numéro ${id_contribution} a été modifiée` });
+    });
 };
 
 // Fonction pour modifier la validation d'une contribution (webmaster uniquement)
