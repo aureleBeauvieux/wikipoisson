@@ -1,5 +1,6 @@
 import express from "express";
 import { TemperamentController } from "../controllers/temperament.controller.js";
+import checkAdmin from "../middlewares/check-admin.mdlwr.js";
 
 // Fonction pour initialiser les routes liées aux temperaments dans l'application Express
 const initTemperamentRoutes = (app) => {
@@ -7,11 +8,11 @@ const initTemperamentRoutes = (app) => {
     const router = express.Router();
 
     // Définition des routes avec les méthodes associées du contrôleur
-    router.post("/create", TemperamentController.createTemperament);
+    router.post("/create", checkAdmin, TemperamentController.createTemperament);
     router.get("/read", TemperamentController.readTemperaments);
-    router.get("/:temperamentId", TemperamentController.readOneTemperament);
-    router.put("/:temperamentId", TemperamentController.updateTemperament);
-    router.delete("/:temperamentId", TemperamentController.deleteOneTemperament);
+    router.get("/:id_temperament", TemperamentController.readOneTemperament);
+    router.put("/:id_temperament", checkAdmin, TemperamentController.updateTemperament);
+    router.delete("/:id_temperament", checkAdmin, TemperamentController.deleteOneTemperament);
 
     // Utilisation du routeur dans l'application avec le préfixe "/temperament"
     app.use("/temperament", router);

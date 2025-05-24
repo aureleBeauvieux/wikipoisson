@@ -1,5 +1,7 @@
 import express from "express";
 import { HabitatController } from "../controllers/habitat.controller.js";
+import checkAdmin from "../middlewares/check-admin.mdlwr.js";
+
 
 // Fonction pour initialiser les routes liées aux habitats dans l'application Express
 const initHabitatRoutes = (app) => {
@@ -7,11 +9,11 @@ const initHabitatRoutes = (app) => {
     const router = express.Router();
 
     // Définition des routes avec les méthodes associées du contrôleur
-    router.post("/create", HabitatController.createHabitat);
+    router.post("/create", checkAdmin, HabitatController.createHabitat);
     router.get("/read", HabitatController.readHabitats);
-    router.get("/:habitatId", HabitatController.readOneHabitat);
-    router.put("/:habitatId", HabitatController.updateHabitat);
-    router.delete("/:habitatId", HabitatController.deleteOneHabitat);
+    router.get("/:id_habitat", HabitatController.readOneHabitat);
+    router.put("/:id_habitat", checkAdmin, HabitatController.updateHabitat);
+    router.delete("/:id_habitat", checkAdmin, HabitatController.deleteOneHabitat);
 
     // Utilisation du routeur dans l'application avec le préfixe "/habitat"
     app.use("/habitat", router);

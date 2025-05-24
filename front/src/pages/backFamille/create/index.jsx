@@ -27,7 +27,7 @@ const BackFamilleCreate = () => {
     ) {
       const API_URL = import.meta.env.VITE_API_URL;
       let data = {
-        id_famille: famille.id_famille,
+        userId: actualUser.user_id,//peut causer des problèmes
         libelle: famille.libelle,
         description: famille.description
       };

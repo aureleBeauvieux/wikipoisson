@@ -5,6 +5,28 @@ import { userService } from "../../utils/userService";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  // Utilisation de l'état local pour stocker les informations de l'utilisateur
+  const [user, setUser] = useState(null);
+
+  // Utilisation du hook useNavigate pour la navigation dans l'application React Router
+  const navigate = useNavigate();
+  userService.setNavigate(navigate);
+
+
+  // Fonction de déconnexion de l'utilisateur
+  const logout = () => {
+      userService.logout();
+  };
+
+  // Utilisation du hook useEffect pour souscrire aux changements de l'utilisateur
+  useEffect(() => {
+      // Abonnement aux mises à jour de l'utilisateur à l'aide du service userService
+      const subscription = userService.user.subscribe((x) => setUser(x));
+
+      // Nettoyage de l'abonnement lors de la destruction du composant
+      return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <>
   <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -13,7 +35,7 @@ const Header = () => {
                 <img
                   src="/image/logoimg.png"
                   className="logo-img"
-                  alt="Zoo de Brocéliande"
+                  
                 />
                 <span className="logo-title">WIKIPOISSONS</span>
       </NavLink>
@@ -73,7 +95,7 @@ const Header = () => {
               )}
 
               {/* Condition pour afficher le lien vers l'espace admin pour les utilisateurs ayant le rôle "admin" */}
-              {user && (user.role === "admin" || user.role === "veto") && (
+              {user && (user.role === "admin" || user.role === "user") && (
                 <NavLink
                   to={"/backOffice"}
                   className={({ isActive }) =>

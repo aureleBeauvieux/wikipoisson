@@ -3,19 +3,19 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditFamille = () => {
-  const { id_famille } = useParams();
+const EditTemperament = () => {
+  const { id } = useParams();
 
   let actualUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
-  const [famille, setFamille] = useState();
+  const [temperament, setTemperament] = useState();
 
   useEffect(() => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API_URL}/famille/${id_famille}`,
+      url: `${import.meta.env.VITE_API_URL}/temperament/${id}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -24,21 +24,21 @@ const EditFamille = () => {
       .request(config)
       .then((response) => {
         console.log(response);
-        setFamille(response.data.famille);
+        setTemperament(response.data.temperament);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [id_famille]);
+  }, [id]);
 
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFamille((prevData) => ({
+    setTemperament((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(famille);
+    console.log(temperament);
   };
 
   const handleSubmit = (e) => {
@@ -46,16 +46,16 @@ const EditFamille = () => {
     if (actualUser !== undefined && actualUser.role === "admin") {
       const API_URL = import.meta.env.VITE_API_URL;
       let data = {
-        id_famille: famille.id_famille,
-        libelle: famille.libelle,
-        description: famille.description,
+        id_temperament: temperament.id_temperament,
+        libelle: temperament.libelle,
+        description: temperament.description,
       };
       data = JSON.stringify(data);
 
       let config = {
         method: "put",
         maxBodyLength: Infinity,
-        url: `${API_URL}/famille/update/${id}`,
+        url: `${API_URL}/temperament/update/${id}`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -69,7 +69,7 @@ const EditFamille = () => {
           if (response.status === 200) {
             toast.success("Modification validée");
             setTimeout(() => {
-              navigate("/backFamille");
+              navigate("/backTemperament");
             }, 3000);
           }
         })
@@ -90,10 +90,24 @@ const EditFamille = () => {
   return (
     <div className="main-table">
       <div className="center">
-        <h2>Modifier la Famille</h2>
+        <h2>Modifier le Tempérament</h2>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="col-sm-6 mx-auto">
+          <div className="mt-4">
+            <label className="form-label" htmlFor="id_temperament">
+              ID Tempérament
+            </label>
+            <input
+              type="text"
+              id="id_temperament"
+              className="form-control"
+              name="id_temperament"
+              value={temperament?.id_temperament || ""}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
           <div className="mt-4">
             <label className="form-label" htmlFor="libelle">
               Libellé
@@ -103,7 +117,7 @@ const EditFamille = () => {
               id="libelle"
               className="form-control"
               name="libelle"
-              value={famille?.libelle || ""}
+              value={temperament?.libelle || ""}
               onChange={handleInputChange}
               required
             />
@@ -117,7 +131,7 @@ const EditFamille = () => {
               className="form-control"
               name="description"
               rows="4"
-              value={famille?.description || ""}
+              value={temperament?.description || ""}
               onChange={handleInputChange}
               required
             />
@@ -133,4 +147,4 @@ const EditFamille = () => {
   );
 };
 
-export default EditFamille;
+export default EditTemperament;

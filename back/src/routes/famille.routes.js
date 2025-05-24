@@ -1,5 +1,7 @@
 import express from "express";
 import { FamilleController } from "../controllers/famille.controller.js";
+import checkAdmin from "../middlewares/check-admin.mdlwr.js";
+
 
 // Fonction pour initialiser les routes liées aux familles dans l'application Express
 const initFamilleRoutes = (app) => {
@@ -7,11 +9,11 @@ const initFamilleRoutes = (app) => {
     const router = express.Router();
 
     // Définition des routes avec les méthodes associées du contrôleur
-    router.post("/create", FamilleController.createFamille);
+    router.post("/create", checkAdmin, FamilleController.createFamille);
     router.get("/read", FamilleController.readFamilles);
-    router.get("/:familleId", FamilleController.readOneFamille);
-    router.put("/:familleId", FamilleController.updateFamille);
-    router.delete("/:familleId", FamilleController.deleteOneFamille);
+    router.get("/:id_famille", FamilleController.readOneFamille);
+    router.put("/:id_famille", checkAdmin, FamilleController.updateFamille);
+    router.delete("/:id_famille", checkAdmin, FamilleController.deleteOneFamille);
 
     // Utilisation du routeur dans l'application avec le préfixe "/famille"
     app.use("/famille", router);

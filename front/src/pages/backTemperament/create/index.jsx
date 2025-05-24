@@ -1,61 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const EditFamille = () => {
-  const { id_famille } = useParams();
-
+const BackTemperamentCreate = () => {
   let actualUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
-  const [famille, setFamille] = useState();
-
-  useEffect(() => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API_URL}/famille/${id_famille}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response);
-        setFamille(response.data.famille);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id_famille]);
+  const [temperament, setTemperament] = useState();
 
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFamille((prevData) => ({
+    setTemperament((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log(famille);
+    console.log(temperament);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (actualUser !== undefined && actualUser.role === "admin") {
+    if (
+      actualUser !== undefined &&
+      actualUser.role === "admin"
+    ) {
       const API_URL = import.meta.env.VITE_API_URL;
       let data = {
-        id_famille: famille.id_famille,
-        libelle: famille.libelle,
-        description: famille.description,
+        id_temperament: temperament.id_temperament,
+        libelle: temperament.libelle,
+        description: temperament.description
       };
       data = JSON.stringify(data);
 
       let config = {
-        method: "put",
+        method: "post",
         maxBodyLength: Infinity,
-        url: `${API_URL}/famille/update/${id}`,
+        url: `${API_URL}/temperament/create`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,9 +48,9 @@ const EditFamille = () => {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            toast.success("Modification validée");
+            toast.success("Création effectuée avec succès");
             setTimeout(() => {
-              navigate("/backFamille");
+              navigate("/backTemperament");
             }, 3000);
           }
         })
@@ -90,10 +71,24 @@ const EditFamille = () => {
   return (
     <div className="main-table">
       <div className="center">
-        <h2>Modifier la Famille</h2>
+        <h2>Nouveau Tempérament</h2>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="col-sm-6 mx-auto">
+          <div className="mt-4">
+            <label className="form-label" htmlFor="id_temperament">
+              ID Tempérament
+            </label>
+            <input
+              type="text"
+              id="id_temperament"
+              className="form-control"
+              name="id_temperament"
+              value={temperament?.id_temperament || ""}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
           <div className="mt-4">
             <label className="form-label" htmlFor="libelle">
               Libellé
@@ -103,7 +98,7 @@ const EditFamille = () => {
               id="libelle"
               className="form-control"
               name="libelle"
-              value={famille?.libelle || ""}
+              value={temperament?.libelle || ""}
               onChange={handleInputChange}
               required
             />
@@ -117,7 +112,7 @@ const EditFamille = () => {
               className="form-control"
               name="description"
               rows="4"
-              value={famille?.description || ""}
+              value={temperament?.description || ""}
               onChange={handleInputChange}
               required
             />
@@ -125,7 +120,7 @@ const EditFamille = () => {
         </div>
         <div className="center mt-4">
           <button className="btn btn-primary" type="submit">
-            Modifier
+            Créer
           </button>
         </div>
       </form>
@@ -133,4 +128,4 @@ const EditFamille = () => {
   );
 };
 
-export default EditFamille;
+export default BackTemperamentCreate;

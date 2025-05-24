@@ -9,9 +9,9 @@ const initHistoriqueRoutes = (app) => {
     // Définition des routes avec les méthodes associées du contrôleur
     router.post("/create", HistoriqueController.createHistorique);
     router.get("/read", HistoriqueController.readHistoriques);
-    router.get("/:historiqueId", HistoriqueController.readOneHistorique);
-    router.put("/:historiqueId", HistoriqueController.updateHistorique);
-    router.delete("/:historiqueId", HistoriqueController.deleteOneHistorique);
+    router.get("/:id_historique", HistoriqueController.readOneHistorique);
+    router.put("/:id_historique", HistoriqueController.updateHistorique);
+    router.delete("/:id_historique", HistoriqueController.deleteOneHistorique);
 
     // Utilisation du routeur dans l'application avec le préfixe "/historique"
     app.use("/historique", router);

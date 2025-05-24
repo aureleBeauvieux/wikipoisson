@@ -57,13 +57,13 @@ const BackFamille = () => {
         <tbody>
           {familles &&
             familles.map((famille) => (
-              <tr key={famille.famille_id}>
-                <td>{famille.famille_id}</td>
+              <tr key={famille.id_famille}>
+                <td>{famille.id_famille}</td>
                 <td>{famille.libelle}</td>
                 <td>{famille.description}</td>
                 <td>
                   <Link
-                    to={`/familleProfile/${famille.famille_id}`}
+                    to={`/backFamille/update/${famille.id_famille}`}
                     className="btn btn-primary"
                     aria-label="Editer les familles"
                   >

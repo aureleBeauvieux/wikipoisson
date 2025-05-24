@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { generateDateTime } from "../../../utils/generateDate";
+import { generateDateTime } from "../../utils/generateDate";
 
 const Contribution = () => {
   const { id } = useParams();

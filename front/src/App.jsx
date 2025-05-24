@@ -1,5 +1,4 @@
-import './App.css'
-import "./styles/index.scss";
+import './App.css'  
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -15,7 +14,7 @@ import BackCommentaireCreate from "./pages/backCommentaire/create";
 import BackCommentaireUpdate from "./pages/backCommentaire/update";
 
 import BackContribution from "./pages/backContribution";
-import BackContributionCreate from "./pages/backContribution/create";
+import Contribution from "./pages/contribution";
 import BackContributionUpdate from "./pages/backContribution/update";
 
 import BackEspece from "./pages/backEspece";
@@ -56,7 +55,7 @@ function App() {
         <Route path="/backCommentaire/update/:id" element={<BackCommentaireUpdate />} />
 
         <Route path="/backContribution" element={<BackContribution />} />
-        <Route path="/backContribution/create" element={<BackContributionCreate />} />
+        <Route path="/Contribution" element={<Contribution />} />
         <Route path="/backContribution/update/:id" element={<BackContributionUpdate />} />
 
         <Route path="/backEspece" element={<BackEspece />} />

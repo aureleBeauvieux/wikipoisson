@@ -9,10 +9,10 @@ const initContributionRoutes = (app) => {
     // Définition des routes avec les méthodes associées du contrôleur
     router.post("/create", ContributionController.createContribution);
     router.get("/read", ContributionController.readContributions);
-    router.get("/user/:userId", ContributionController.readUserContributions);
-    router.get("/:contributionId", ContributionController.readOneContribution);
-    router.put("/:contributionId", ContributionController.updateContribution);
-    router.delete("/:contributionId", ContributionController.deleteOneContribution);
+    router.get("/user/:userId", ContributionController.readUserContributions); //user ??? 
+    router.get("/:id_contribution", ContributionController.readOneContribution);
+    router.put("/:id_contribution", ContributionController.updateContribution);
+    router.delete("/:id_contribution", ContributionController.deleteOneContribution);
 
     // Utilisation du routeur dans l'application avec le préfixe "/contribution"
     app.use("/contribution", router);
