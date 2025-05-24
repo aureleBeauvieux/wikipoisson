@@ -39,6 +39,23 @@ const readContributions = async() => {
         return { error, result };
     }
 };
+const readUserContributions = async(user_id) => {
+    const sql = `
+        SELECT id_contribution, date_creation, validation, user_id, id_espece, nom_commun, nom_scientifique, description, taille_max, alimentation, temperature, dificulte, cree_le, id_temperament, id_famille, id_habitat
+        FROM contribution
+        WHERE user_id = ?
+        ORDER BY date_creation DESC
+    `;
+    let error = null;
+    let result = null;
+    try {
+        result = await query(sql, [user_id]);
+    } catch (e) {
+        error = e.message;
+    } finally {
+        return { error, result };
+    }
+};
 
 // Fonction pour récupérer une seule contribution
 const readOneContribution = async(id_contribution) => {
@@ -123,6 +140,7 @@ const updateValidation = async(id_contribution, validation) => {
 export const ContributionDB = {
     createContribution,
     readContributions,
+    readUserContributions,
     readOneContribution,
     updateContribution,
     deleteOneContribution,

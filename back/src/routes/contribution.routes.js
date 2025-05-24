@@ -9,6 +9,7 @@ const initContributionRoutes = (app) => {
     // Définition des routes avec les méthodes associées du contrôleur
     router.post("/create", ContributionController.createContribution);
     router.get("/read", ContributionController.readContributions);
+    router.get("/user/:userId", ContributionController.readUserContributions);
     router.get("/:contributionId", ContributionController.readOneContribution);
     router.put("/:contributionId", ContributionController.updateContribution);
     router.delete("/:contributionId", ContributionController.deleteOneContribution);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backFamille.css";
+import "./backCommentaire.css";
 
 const BackCommentaire = () => {
   const [commentaires, setCommentaires] = useState(null);
@@ -62,7 +62,7 @@ const BackCommentaire = () => {
                 <td>{commentaire.id_espece}</td>
                 <td>
                   <Link
-                    to={`/commentaireProfile/${commentaire.id_commentaire}`}
+                    to={`/backCommentaire/update/${commentaire.id_commentaire}`}
                     className="btn btn-primary"
                     aria-label="Editer les commentaires"
                   >

@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./backContribution.css";
 
-const BackContribution = () => {
+const UserContributions = () => {
   const [contributions, setContributions] = useState(null);
   console.log(contributions);
+  let actualUser = JSON.parse(localStorage.getItem("user"));
+  const userId = actualUser.userId;
   useEffect(() => {
     let data;
 
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://localhost:3009/contribution/read",
+      url: `http://localhost:3009/contribution/user/${userId}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,7 +65,7 @@ const BackContribution = () => {
                 <td>{contribution.nom_commun}</td>
                 <td>
                   <Link
-                    to={`/backContribution/update/${contribution.id_contribution}`}
+                    to={`/contribution/update/${contribution.id_contribution}`}
                     className="btn btn-primary"
                     aria-label="Editer la contribution"
                   >
@@ -87,4 +88,4 @@ const BackContribution = () => {
   );
 };
 
-export default BackContribution;
+export default UserContributions;

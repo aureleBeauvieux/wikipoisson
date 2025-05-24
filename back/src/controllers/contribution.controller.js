@@ -67,6 +67,14 @@ const readContributions = async(req, res) => {
     return res.status(200).json({ message: "OK", contributions });
 };
 
+const readUserContributions = async(req, res) => {
+    const user_id = req.params.user_id;
+    const contributionResponse = await ContributionDB.readContributions(user_id);
+    const contributions = contributionResponse.result;
+
+    return res.status(200).json({ message: "OK", contributions });
+};
+
 // Fonction pour récupérer une contribution spécifique
 const readOneContribution = async(req, res) => {
     const id_contribution = req.params.id_contribution;
@@ -179,6 +187,7 @@ const deleteOneContribution = async(req, res) => {
 export const ContributionController = {
     createContribution,
     readContributions,
+    readUserContributions,
     readOneContribution,
     updateContribution,
     updateValidation,
